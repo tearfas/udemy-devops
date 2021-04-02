@@ -31,10 +31,6 @@ pipeline{
         // Stage3 : Publish the artifacts to Nexus
         stage ('Publish to Nexus'){
             steps {
-                script{
-
-                  def NexusRepo = Version.endsWith("SNAPSHOT") ? "BrightDevopsLab-SNAPSHOT" : "BrightDevopsLab-RELEASE"
-
                   nexusArtifactUploader artifacts: 
                   [[artifactId: "${ArtifactId}", 
                   classifier: '', 
@@ -45,9 +41,8 @@ pipeline{
                   nexusUrl: '192.168.1.217:8081', 
                   nexusVersion: 'nexus3', 
                   protocol: 'http', 
-                  repository: "${NexusRepo}", 
+                  repository: 'BrightDevopsLab-SNAPSHOT', 
                   version: "${Version}"
-                }
             }
         }
 
