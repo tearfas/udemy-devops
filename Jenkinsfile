@@ -27,12 +27,7 @@ pipeline{
 
             }
         }
-        //Stage 3: Publish to nexus
-        stage ('Publish To Nexus') {
-            steps {
-                nexusArtifactUploader artifacts: [[artifactId: 'brightdevopslab', classifier: '', file: 'target/brightdevopslab-0.0.7-SNAPSHOT.war', type: 'war']], credentialsId: '5c98ee06-f735-4b4b-8a9e-142d0b151fdf', groupId: 'com.brightdevopslab', nexusUrl: '192.168.1.217:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'BrightDevopsLab-SNAPSHOT', version: '0.0.7-SNAPSHOT'
-            }
-        }
+
         //Stage 4 : Print Variables declared above
         stage ('Print environment Variables') {
             steps {
