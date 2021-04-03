@@ -31,18 +31,21 @@ pipeline{
         // Stage3 : Publish the artifacts to Nexus
         stage ('Publish to Nexus'){
             steps {
-                  nexusArtifactUploader artifacts: 
-                  [[artifactId: "${ArtifactId}", 
-                  classifier: '', 
-                  file: "target/${ArtifactId}-${Version}.war", 
-                  type: 'war']], 
-                  credentialsId: '5c98ee06-f735-4b4b-8a9e-142d0b151fdf', 
-                  groupId: "${GroupId}", 
-                  nexusUrl: '192.168.1.217:8081', 
-                  nexusVersion: 'nexus3', 
-                  protocol: 'http', 
-                  repository: 'BrightDevopsLab-SNAPSHOT', 
-                  version: "${Version}"
+                script {
+                     def NexusRepo = Version.endsWith("SNAPSHOT") ? "VinaysDevOpsLab-SNAPSHOT" : "VinaysDevOpsLab-RELEASE"
+                     nexusArtifactUploader artifacts: 
+                     [[artifactId: "${ArtifactId}", 
+                     classifier: '', 
+                     file: "target/${ArtifactId}-${Version}.war", 
+                     type: 'war']], 
+                     credentialsId: '5c98ee06-f735-4b4b-8a9e-142d0b151fdf', 
+                     groupId: "${GroupId}", 
+                     nexusUrl: '192.168.1.217:8081', 
+                     nexusVersion: 'nexus3', 
+                     protocol: 'http', 
+                     repository: "${NexusRepo}", 
+                     version: "${Version}"
+                }
             }
         }
 
