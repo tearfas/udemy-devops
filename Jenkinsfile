@@ -63,6 +63,18 @@ pipeline{
         stage ('Deploy') {
             steps {
                 echo 'Deploying to Prod...... '
+                sshPublisher(publishers: 
+                [sshPublisherDesc(
+                    configName: 'Ansiblecontrolnode', 
+                    transfers: [
+                        sshTransfer (
+                            cleanRemote: false,
+                            execCommand: 'ansible-playbook /home/sysadmin/udemy-devops/downloaddeploy.yml -i /home/sysadmin/udemy-devops/inventory',
+                            execTimeout: 1200000
+                        )
+                    ], 
+                    usePromotionTimestamp: false, useWorkspaceInPromotion: false, 
+                    verbose: false)])
             }
         } 
     }
