@@ -13,7 +13,6 @@ pipeline{
 
     stages {
         // Specify various stage with in stages
-
         // stage 1. Build
         stage ('Build'){
             steps {
@@ -60,7 +59,7 @@ pipeline{
         }
     
         // Stage 5 : Publish the source code to Sonarqube
-        stage ('Deploy') {
+        stage ('Deploy to tomcat') {
             steps {
                 echo 'Deploying to Prod...... '
                 sshPublisher(publishers: 
@@ -78,7 +77,7 @@ pipeline{
             }
         } 
         // Stage 6 : Publish the source code to Docker
-        stage ('Deploy') {
+        stage ('Deploy to docker') {
             steps {
                 echo 'Deploying to Docker...... '
                 sshPublisher(publishers: 
