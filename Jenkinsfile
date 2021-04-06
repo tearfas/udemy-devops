@@ -77,6 +77,24 @@ pipeline{
                     verbose: false)])
             }
         } 
+        // Stage 6 : Publish the source code to Docker
+        stage ('Deploy') {
+            steps {
+                echo 'Deploying to Docker...... '
+                sshPublisher(publishers: 
+                [sshPublisherDesc(
+                    configName: 'Ansiblecontrolnode', 
+                    transfers: [
+                        sshTransfer (
+                            cleanRemote: false,
+                            execCommand: 'ansible-playbook /home/sysadmin/udemy-devops/downloaddeploy_docker.yml -i /home/sysadmin/udemy-devops/inventory',
+                            execTimeout: 1200000
+                        )
+                    ], 
+                    usePromotionTimestamp: false, useWorkspaceInPromotion: false, 
+                    verbose: false)])
+            }
+        } 
     }
 
 }
